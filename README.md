@@ -12,6 +12,7 @@
 <img src="./images/1.png"  width = "320" />
 <img src="./images/2.png"  width = "320" /></div>
 
+
 **业务难点：**
 
 - **精度要求高** 由于涉及安全问题，需要精度非常高才能保证对施工场所人员的安全督导。需要专门针对此目标的检测算法进行优化，另外，还需要处理拍摄角度、光线不完全受控，安全帽显示不全、可能存在遮挡等情况。
@@ -19,6 +20,7 @@
 
 <div align="center">
 <img src="./images/3.jpg"  width = "1024" /></div>
+
 
 
 
@@ -82,6 +84,7 @@ python code/train.py > log
 <div align="center">
 <img src="./images/4.png"  width = "1024" /></div>
 
+
 ## 5.模型优化(进阶)
 
 - 精度提升 为了进一步提升模型的精度，可以通过**coco_error_analysis**，具体请参考[模型优化分析文档](./accuracy_improvement.md)
@@ -100,7 +103,17 @@ python code/train.py > log
 | PPYOLOV2 + ResNet101_vd_dcn + img_size(608)                  |        106.62         | 61.3         |    40.6    |       95.15       |
 |                                                              |                       |              |            |                   |
 
-注意: **608**的图像大小，一般使用默认的anchors进行训练和推理即可。
+注意: 
+
+- **608**的图像大小，一般使用默认的anchors进行训练和推理即可。
+- **cluster_yolo_anchor**: 用于生成拟合数据集的模型anchor
+
+```
+anchors = train_dataset.cluster_yolo_anchor(num_anchors=9, image_size=480)
+anchor_masks = [[6, 7, 8], [3, 4, 5], [0, 1, 2]]
+```
+
+
 
 **优化进展说明**：
 
@@ -145,6 +158,7 @@ python code/infer.py
 <img src="images/5.png"  width = "400" />
 <img src="images/6.png"  width = "400" /></div>
 
+
 ## 7.模型导出
 
 模型训练后保存在output文件夹，如果要使用PaddleInference进行部署需要导出成静态图的模型,运行如下命令，会自动在output文件夹下创建一个`inference_model`的文件夹，用来存放导出后的模型。
@@ -171,6 +185,7 @@ paddlex --export_inference --model_dir=output/yolov3_darknet53/best_model --save
 <div align="center">
 <img src="images/8.png"  width = "1024" /></div>
 
+
 在本项目中的安全帽检测数据中，标注信息本身存在一定的缺漏，导致部分类别学习失效。但针对本项目的安全帽检测问题而言，**person(人)这一类别影响不大，因此可以在mmap较大的基础上主要看helmet(安全帽)的精度即可**。通过**COCO的评估指标**，可以使多类别的检测模型的评估更加符合实际应用；虽然我们可以看出在该数据集中，有一个类别对整体的map与mmap有较大影响，但是通过COCO指标能够取得一个相对数据集更**综合表现**(不同Iou尺度下)的一个模型。
 
 **注意**: 通过VOC指标也许能够取得更好的Iou-0.5指标下更好的数据，但是却会使得对多Iou尺度的一个评估，使得得到该评估指标下最好的模型未必在其它Iou尺度下也有最好的表现。
@@ -179,7 +194,7 @@ paddlex --export_inference --model_dir=output/yolov3_darknet53/best_model --save
 
 
 
-模型部署采用了PaddleX提供的C++ inference部署方案，在该方案中提供了C#部署[Demo](https://github.com/PaddlePaddle/PaddleX/tree/release/2.0.0/examples/C%23_deploy)，用户可根据实际情况自行参考。
+模型部署采用了PaddleX提供的C++ inference部署方案，在该方案中提供了C#部署[Demo](https://github.com/PaddlePaddle/PaddleX/tree/develop/examples/C%23_deploy)，用户可根据实际情况自行参考。
 
 <div align="center">
 <img src="images/14.png"  width = "1024" /></div>
