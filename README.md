@@ -49,7 +49,6 @@ dataset/                          dataset/
   ├── Annotations/      -->         ├── Annotations/
   ├── JPEGImages/                   ├── JPEGImages/
                                     ├── labels.txt
-                                    ├── test_list.txt
                                     ├── train_list.txt
                                     ├── val_list.txt
 ```
