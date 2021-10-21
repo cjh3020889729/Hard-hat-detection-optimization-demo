@@ -97,7 +97,8 @@ python code/train.py > log
 | ------------------------------------------------------------ | :-------------------: | ------------ | :--------: | :---------------: |
 | baseline: YOLOv3 + DarkNet53 + cluster_yolo_anchor + img_size(480) |         50.34         | 61.6         |    39.2    |       94.58       |
 | YOLOv3 + ResNet50_vd_dcn + cluster_yolo_anchor+img_size(480) |         53.81         | 61.7         |    39.1    |       95.35       |
-| **PPYOLO + ResNet50_vd_dcn + iou_aware + img_size(480)**     |         72.88         | **62.4**     |    37.7    |     **95.73**     |
+| PPYOLO + ResNet50_vd_dcn + iou_aware + img_size(480)     |         72.88         | 62.4     |    37.7    |     95.73     |
+| **PPYOLO + ResNet50_vd_dcn + label_smooth=True + iou_aware + img_size(480)**     |         72.76         | **63.5**     |    **40.6**    |     **96.83**     |
 | PPYOLO + ResNet50_vd_dcn + cluster_yolo_anchor + img_size(480) |         67.14         | 61.8         |    39.8    |       95.08       |
 | **PPYOLOV2 + ResNet50_vd_dcn + img_size(608)**               |         81.52         | 61.6         |  **41.3**  |       95.32       |
 | PPYOLOV2 + ResNet101_vd_dcn + img_size(608)                  |        106.62         | 61.3         |    40.6    |       95.15       |
@@ -106,7 +107,8 @@ python code/train.py > log
 注意: 
 
 - **608**的图像大小，一般使用默认的anchors进行训练和推理即可。
-- **cluster_yolo_anchor**: 用于生成拟合数据集的模型anchor
+- **cluster_yolo_anchor**: 用于生成拟合数据集的模型anchor。
+- **label_smooth**: 通常用于当模型能够较好的拟合训练集时，进行正则化处理，提高训练模型的泛化能力——即测试/评估精度。
 
 ```
 anchors = train_dataset.cluster_yolo_anchor(num_anchors=9, image_size=480)
@@ -137,7 +139,7 @@ anchor_masks = [[6, 7, 8], [3, 4, 5], [0, 1, 2]]
 
 - | 模型                                           | 推理时间 （ms/image） | map(Iou-0.5) | (coco)mmap | 安全帽AP(Iou-0.5) |
   | ---------------------------------------------- | :-------------------: | ------------ | :--------: | :---------------: |
-  | **PPYOLO + ResNet50_vd_dcn + img_size(480)**   |         72.88         | **62.4**     |    37.7    |     **95.73**     |
+  | **PPYOLO + ResNet50_vd_dcn + label_smooth=True + iou_aware + img_size(480)**   |         72.76         | **63.5**     |    **40.6**    |     **96.83**     |
   | **PPYOLOV2 + ResNet50_vd_dcn + img_size(608)** |         81.52         | 61.6         |  **41.3**  |       95.32       |
 
 ## 6.模型预测
