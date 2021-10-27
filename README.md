@@ -97,7 +97,7 @@ python code/train.py > log
 | ------------------------------------------------------------ | :-------------------: | ------------ | :--------: | :---------------: |
 | baseline: YOLOv3 + DarkNet53 + cluster_yolo_anchor + img_size(480) |         50.34         | 61.6         |    39.2    |       94.58       |
 | YOLOv3 + ResNet50_vd_dcn + cluster_yolo_anchor+img_size(480) |         53.81         | 61.7         |    39.1    |       95.35       |
-| PPYOLO + ResNet50_vd_dcn + img_size(480) |         67.06         | 61.9         |    39.6    |       95.48       |
+| PPYOLO + ResNet50_vd_dcn + img_size(480) |         67.06         | 61.74         |    39.92    |       95.48       |
 | PPYOLO + ResNet50_vd_dcn + cluster_yolo_anchor + img_size(480) |         67.14         | 61.8         |    39.8    |       95.08       |
 | PPYOLO + ResNet50_vd_dcn + iou_aware + img_size(480)     |         72.88         | 62.4     |    37.7    |     95.73     |
 | **PPYOLO + ResNet50_vd_dcn + label_smooth=True + iou_aware + img_size(480)**     |         72.76         | **63.5**     |    **40.6**    |     **96.83**     |
@@ -131,7 +131,7 @@ anchor_masks = [[6, 7, 8], [3, 4, 5], [0, 1, 2]]
 
   <**480到608**>
 
-- 4.通过cluster_yolo_anchor生成当前网络输入图像大小下拟合数据集的预置anchors，利用新生成的anchors替换原来的默认anchor，使得模型预测定位上框选**位置更准确**。
+- 4.通过cluster_yolo_anchor生成当前网络输入图像大小下拟合数据集的预置anchors，利用新生成的anchors替换原来的默认anchor，当数据集较大时，会取得正向收益，但目前的实验中，由于数据集相对于COCO数据集较小，因此生成的anchors较集中紧凑，反而会影响模型评估结果部分物体检测效果略微下调，从而导致**mmap下降**。
 
 - 5.通过PPYOLO两个实验，一个使用**iou_aware**，一个不是使用**iou_aware**而采用聚类得到的**anchor**提高定位能力；分析数据发现在定位信息优化上，**iou_aware**在当前数据集上表现更好，但推理时间也有所提升。
 
