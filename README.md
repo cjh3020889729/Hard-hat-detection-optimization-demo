@@ -97,8 +97,8 @@ python code/train.py > log
 | ------------------------------------------------------------ | :-------------------: | ------------ | :--------: | :---------------: |
 | baseline: YOLOv3 + DarkNet53 + cluster_yolo_anchor + img_size(480) |         50.34         | 61.6         |    39.2    |       94.58       |
 | YOLOv3 + ResNet50_vd_dcn + cluster_yolo_anchor+img_size(480) |         53.81         | 61.7         |    39.1    |       95.35       |
+| PPYOLO + ResNet50_vd_dcn + img_size(480) |         67.06         | 61.9         |    39.6    |       95.48       |
 | PPYOLO + ResNet50_vd_dcn + cluster_yolo_anchor + img_size(480) |         67.14         | 61.8         |    39.8    |       95.08       |
-PPYOLO + ResNet50_vd_dcn + img_size(480) |         67.06         | 61.9         |    39.6    |       95.48       |
 | PPYOLO + ResNet50_vd_dcn + iou_aware + img_size(480)     |         72.88         | 62.4     |    37.7    |     95.73     |
 | **PPYOLO + ResNet50_vd_dcn + label_smooth=True + iou_aware + img_size(480)**     |         72.76         | **63.5**     |    **40.6**    |     **96.83**     |
 | **PPYOLOV2 + ResNet50_vd_dcn + img_size(608)**               |         81.52         | 61.6         |  **41.3**  |       95.32       |
